@@ -8,7 +8,7 @@ info:
     email: yusuf_murodov@epam.com
 
 servers:
-  - url: /courses/
+  - url: /courses
 
 paths:
   /courses:
@@ -22,22 +22,22 @@ paths:
         content:
           application/json:
             schema:
-              $ref: schemas/dto/course-request.json
+              $ref: schemas/dto/course.json
       responses:
         '200':
           description: Save simple course data
           content:
             application/json:
               schema:
-                $ref: schemas/dto/course-response.json
+                $ref: schemas/dto/course.json
               example:
-                $ref: examples/dto/course-response.json
+                $ref: examples/dto/course.json
         '400':
           $ref: 'common-components.yaml#/components/responses/badRequestErrorResponse'
         '401':
           $ref: 'common-components.yaml#/components/responses/unauthorizedErrorResponse'
         '403':
-          $ref: 'yml-utils/traits/common-components.yaml#/components/responses/accessDeniedResponse'
+          $ref: 'common-components.yaml#/components/responses/accessDeniedResponse'
         '500':
           $ref: 'common-components.yaml#/components/responses/internalErrorResponse'
 
@@ -59,19 +59,19 @@ paths:
           content:
             application/json:
               schema:
-                $ref: schemas/dto/course-response.json
+                $ref: schemas/dto/course.json
               example:
-                $ref: examples/dto/course-response.json
+                $ref: examples/dto/course.json
         '400':
           $ref: 'common-components.yaml#/components/responses/badRequestErrorResponse'
         '401':
           $ref: 'common-components.yaml#/components/responses/unauthorizedErrorResponse'
         '404':
-          $ref: 'yml-utils/common-components.yaml#/components/responses/notFoundResponse'
+          $ref: 'common-components.yaml#/components/responses/notFoundResponse'
         '500':
           $ref: 'common-components.yaml#/components/responses/internalErrorResponse'
 
-    update:
+    put:
       operationId: updateCourse
       summary: Update a course information by course id
       description: Update a course information by course id
@@ -88,22 +88,22 @@ paths:
         content:
           application/json:
             schema:
-              $ref: schemas/dto/course-request.json
+              $ref: schemas/dto/course.json
       responses:
         '200':
           description: Update a course information by course id
           content:
             application/json:
               schema:
-                $ref: schemas/dto/course-response.json
+                $ref: schemas/dto/course.json
               example:
-                $ref: examples/dto/course-response.json
+                $ref: examples/dto/course.json
         '400':
           $ref: 'common-components.yaml#/components/responses/badRequestErrorResponse'
         '401':
           $ref: 'common-components.yaml#/components/responses/unauthorizedErrorResponse'
         '404':
-          $ref: 'yml-utils/common-components.yaml#/components/responses/notFoundResponse'
+          $ref: 'common-components.yaml#/components/responses/notFoundResponse'
         '500':
           $ref: 'common-components.yaml#/components/responses/internalErrorResponse'
 
@@ -125,8 +125,8 @@ paths:
         '401':
           $ref: 'common-components.yaml#/components/responses/unauthorizedErrorResponse'
         '403':
-          $ref: 'yml-utils/traits/common-components.yaml#/components/responses/accessDeniedResponse'
+          $ref: 'common-components.yaml#/components/responses/accessDeniedResponse'
         '404':
-          $ref: 'yml-utils/common-components.yaml#/components/responses/notFoundResponse'
+          $ref: 'common-components.yaml#/components/responses/notFoundResponse'
         '500':
-          $ref: 'yml-utils/common-components.yaml#/components/responses/internalServerErrorResponse'
+          $ref: 'common-components.yaml#/components/responses/internalErrorResponse'
