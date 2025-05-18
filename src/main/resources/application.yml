@@ -10,3 +10,14 @@ spring:
     password: ${DB_PASSWORD:advancedbackend}
   jpa:
     show-sql: true
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${AUTH_SERVER:http://localhost:8090/realms/advanced-backend-dev}
+
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+    org.springframework.security.oauth2: DEBUG
