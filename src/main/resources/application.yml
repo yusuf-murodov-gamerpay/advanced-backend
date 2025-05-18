@@ -16,8 +16,30 @@ spring:
         jwt:
           issuer-uri: ${AUTH_SERVER:http://localhost:8090/realms/advanced-backend-dev}
 
-
 logging:
   level:
     org.springframework.security: DEBUG
     org.springframework.security.oauth2: DEBUG
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, metrics, prometheus, customHealth
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+  info:
+    env:
+      enabled: true
+
+info:
+  app:
+    name: Advanced backend services
+    description: This is an enhanced actuator demo
+    version: 1.0.0

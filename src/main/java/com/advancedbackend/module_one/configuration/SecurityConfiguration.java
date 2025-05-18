@@ -1,6 +1,7 @@
 package com.advancedbackend.module_one.configuration;
 
 import lombok.extern.log4j.Log4j2;
+import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.http.HttpMethod;
@@ -19,24 +20,22 @@ import java.util.Collection;
 import java.util.Map;
 
 @EnableWebSecurity
-@Log4j2
 public class SecurityConfiguration {
+
     @Bean
     public SecurityFilterChain resourceServerSecurityFilterChain(HttpSecurity http,
                                                                  Converter<Jwt, AbstractAuthenticationToken> authenticationConverter) throws Exception {
-        http.oauth2ResourceServer(resourceServer -> resourceServer
-                .jwt(jwtDecoder -> jwtDecoder.jwtAuthenticationConverter(authenticationConverter))
-        );
-
-        http.sessionManagement(sessions -> sessions
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .csrf(AbstractHttpConfigurer::disable);
-
-        http.authorizeHttpRequests(requests -> {
-            requests.requestMatchers(HttpMethod.GET, "/**").hasRole("USER");
-            requests.requestMatchers("/**").hasRole("ADMIN");
-            requests.anyRequest().authenticated();
-        });
+        http
+                .csrf(AbstractHttpConfigurer::disable)
+                .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .oauth2ResourceServer(oauth2 -> oauth2
+                        .jwt(jwt -> jwt.jwtAuthenticationConverter(authenticationConverter))
+                )
+                .authorizeHttpRequests(authz -> authz
+                        .requestMatchers(HttpMethod.GET, "/**").hasRole("USER")
+                        .requestMatchers("/**").hasRole("ADMIN")
+                        .anyRequest().authenticated()
+                );
 
         return http.build();
     }

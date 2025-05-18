@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 @Service
@@ -15,7 +16,9 @@ import org.springframework.web.server.ResponseStatusException;
 public class CourseService {
     private final CourseMapper mapper;
     private final CourseRepository repository;
+    private final CustomMetrics customMetrics;
 
+    @Transactional
     public Course save(Course courseDTO) {
         log.info("Saving new course: {}", courseDTO);
         var course = mapper.toCourseEntity(courseDTO);
@@ -23,6 +26,7 @@ public class CourseService {
         return mapper.toCourseDto(savedCourse);
     }
 
+    @Transactional
     public Course update(int id, Course courseDTO) {
         boolean isExisted = repository.existsById(id);
         if(!isExisted) {
@@ -33,6 +37,7 @@ public class CourseService {
 
     public Course getById(int id) {
         log.info("Getting course by id: {}", id);
+        customMetrics.processSomething();
         return repository.findById(id)
                 .map(mapper::toCourseDto)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Course not found with id=" + id));
