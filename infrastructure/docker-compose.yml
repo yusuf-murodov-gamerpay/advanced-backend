@@ -1,0 +1,58 @@
+version: "3.9"
+services:
+  keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    container_name: keycloak
+    environment:
+      KC_HEALTH_ENABLED: true
+      KC_METRICS_ENABLED: true
+      KC_HTTP_ENABLED: true
+      KC_HOSTNAME_STRICT: false
+      KC_HOSTNAME_STRICT_HTTPS: false
+      KEYCLOAK_SSL_REQUIRED: none
+      KC_HOSTNAME_STRICT_BACKCHANNEL: false
+      KC_HOSTNAME: ${KC_HOSTNAME}
+      KC_HOSTNAME_PORT: 8090
+      DB_VENDOR: postgres
+      DB_ADDR: kc-postgres
+      DB_DATABASE: ${KC_DB_DATABASE}
+      DB_USER: ${KC_DB_USERNAME}
+      DB_PASSWORD: ${KC_DB_PASSWORD}
+      KC_BOOTSTRAP_ADMIN_USERNAME: ${KC_ADMIN_USERNAME}
+      KC_BOOTSTRAP_ADMIN_PASSWORD: ${KC_ADMIN_PASSWORD}
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://kc-postgres/${KC_DB_DATABASE}
+      KC_DB_USERNAME: ${KC_DB_USERNAME}
+      KC_DB_PASSWORD: ${KC_DB_PASSWORD}
+    ports:
+      - 8090:8080
+    depends_on:
+      - kc-postgres
+    restart: unless-stopped
+    command:
+      - start
+      - --import-realm
+    volumes:
+      - ./.keycloak/:/opt/keycloak/data/import/
+    networks:
+      - advanced-backend-network
+
+  kc-postgres:
+    image: postgres:latest
+    container_name: kc-postgres
+    environment:
+      POSTGRES_DB: ${KC_DB_DATABASE}
+      POSTGRES_USER: ${KC_DB_USERNAME}
+      POSTGRES_PASSWORD: ${KC_DB_PASSWORD}
+    volumes:
+      - kc_postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+    networks:
+      - advanced-backend-network
+
+volumes:
+  kc_postgres_data:
+
+networks:
+  advanced-backend-network:
+    driver: bridge

@@ -1,0 +1,132 @@
+openapi: 3.0.0
+info:
+  title: Course API
+  version: 1.0.0
+  description: This is a simple course API
+  contact:
+    name: Yusuf Murodov
+    email: yusuf_murodov@epam.com
+
+servers:
+  - url: /courses
+
+paths:
+  /courses:
+    post:
+      operationId: saveCourse
+      summary: Save simple course information
+      description: Save simple course information
+      requestBody:
+        required: true
+        description: Save simple course information
+        content:
+          application/json:
+            schema:
+              $ref: schemas/dto/course.json
+      responses:
+        '200':
+          description: Save simple course data
+          content:
+            application/json:
+              schema:
+                $ref: schemas/dto/course.json
+              example:
+                $ref: examples/dto/course.json
+        '400':
+          $ref: 'common-components.yaml#/components/responses/badRequestErrorResponse'
+        '401':
+          $ref: 'common-components.yaml#/components/responses/unauthorizedErrorResponse'
+        '403':
+          $ref: 'common-components.yaml#/components/responses/accessDeniedResponse'
+        '500':
+          $ref: 'common-components.yaml#/components/responses/internalErrorResponse'
+
+  /courses/{courseId}:
+    get:
+      operationId: getCourse
+      summary: Retrieve a course information by course id
+      description: Retrieve a course information by course id
+      parameters:
+        - in: path
+          name: courseId
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the course to retrieve
+      responses:
+        '200':
+          description: Retrieve a course information by course id
+          content:
+            application/json:
+              schema:
+                $ref: schemas/dto/course.json
+              example:
+                $ref: examples/dto/course.json
+        '400':
+          $ref: 'common-components.yaml#/components/responses/badRequestErrorResponse'
+        '401':
+          $ref: 'common-components.yaml#/components/responses/unauthorizedErrorResponse'
+        '404':
+          $ref: 'common-components.yaml#/components/responses/notFoundResponse'
+        '500':
+          $ref: 'common-components.yaml#/components/responses/internalErrorResponse'
+
+    put:
+      operationId: updateCourse
+      summary: Update a course information by course id
+      description: Update a course information by course id
+      parameters:
+        - in: path
+          name: courseId
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the course to update
+      requestBody:
+        description: Update a course information by course id
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: schemas/dto/course.json
+      responses:
+        '200':
+          description: Update a course information by course id
+          content:
+            application/json:
+              schema:
+                $ref: schemas/dto/course.json
+              example:
+                $ref: examples/dto/course.json
+        '400':
+          $ref: 'common-components.yaml#/components/responses/badRequestErrorResponse'
+        '401':
+          $ref: 'common-components.yaml#/components/responses/unauthorizedErrorResponse'
+        '404':
+          $ref: 'common-components.yaml#/components/responses/notFoundResponse'
+        '500':
+          $ref: 'common-components.yaml#/components/responses/internalErrorResponse'
+
+    delete:
+      operationId: deleteCourse
+      summary: Delete a course information by course id
+      description: Delete a course information by course id
+      parameters:
+        - in: path
+          name: courseId
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the course to delete
+      responses:
+        '204':
+          description: Course is deleted
+
+        '401':
+          $ref: 'common-components.yaml#/components/responses/unauthorizedErrorResponse'
+        '403':
+          $ref: 'common-components.yaml#/components/responses/accessDeniedResponse'
+        '404':
+          $ref: 'common-components.yaml#/components/responses/notFoundResponse'
+        '500':
+          $ref: 'common-components.yaml#/components/responses/internalErrorResponse'

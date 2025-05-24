@@ -1,0 +1,21 @@
+{
+  "title": "Metadata Schema",
+  "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",
+  "type": "object",
+  "properties": {
+    "createdDate": {
+      "description": "Date and time when the record was created",
+      "type": "string",
+      "format": "date-time"
+    },
+    "updatedDate": {
+      "description": "Date and time when the record was last updated",
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "createdDate"
+  ]
+}

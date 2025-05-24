@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Course Schema",
+  "description": "The course consists of name, start date and end date",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "The id of course"
+    },
+    "name": {
+      "type": "string",
+      "description": "The name of the course"
+    },
+    "startDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The date when the course starts"
+    },
+    "endDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The date when the course ends"
+    },
+    "metadata": {
+      "$ref": "metadata.json"
+    }
+  }
+}

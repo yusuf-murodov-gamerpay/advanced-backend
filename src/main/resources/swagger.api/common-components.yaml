@@ -1,0 +1,55 @@
+openapi: 3.0.0
+info:
+  title: Advanced backend common components
+  version: 1.0.0
+  description: Advanced backend common components
+  contact:
+    name: Yusuf Murodov
+    email: yusuf_murodov@epam.com
+
+components:
+  schemas:
+    errorResponse:
+      $ref: 'schemas/error/error.json#/Error'
+
+  responses:
+    badRequestErrorResponse:
+      description: Bad request error response
+      content:
+        application/json:
+          example:
+            $ref: examples/error/badRequestErrorResponse.json
+          schema:
+            $ref: '#/components/schemas/errorResponse'
+    unauthorizedErrorResponse:
+      description: Unauthorized error response
+      content:
+        application/json:
+          example:
+            $ref: examples/error/unauthorizedErrorResponse.json
+          schema:
+            $ref: '#/components/schemas/errorResponse'
+    internalErrorResponse:
+      description: Internal error response
+      content:
+        application/json:
+          example:
+            $ref: examples/error/internalErrorResponse.json
+          schema:
+            $ref: '#/components/schemas/errorResponse'
+    notFoundResponse:
+      description: Item with a given ID not found
+      content:
+        application/json:
+          example:
+            $ref: examples/error/notFoundErrorResponse.json
+          schema:
+            $ref: "#/components/schemas/errorResponse"
+    accessDeniedResponse:
+      description: Access Denied
+      content:
+        application/json:
+          example:
+            $ref: examples/error/accessDeniedErrorResponse.json
+          schema:
+            $ref: "#/components/schemas/errorResponse"

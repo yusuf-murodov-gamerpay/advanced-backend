@@ -1,0 +1,45 @@
+server:
+  port: 8081
+spring:
+  application.name: module-one
+  liquibase:
+    change-log: classpath:changelog/changelog-master.xml
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:advancedbackend}
+    username: ${DB_USERNAME:advancedbackend}
+    password: ${DB_PASSWORD:advancedbackend}
+  jpa:
+    show-sql: true
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${AUTH_SERVER:http://localhost:8090/realms/advanced-backend-dev}
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+    org.springframework.security.oauth2: DEBUG
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, metrics, prometheus, customHealth
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+  info:
+    env:
+      enabled: true
+
+info:
+  app:
+    name: Advanced backend services
+    description: This is an enhanced actuator demo
+    version: 1.0.0
